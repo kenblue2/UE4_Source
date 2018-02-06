@@ -508,65 +508,65 @@ void FAnimationViewportClient::DrawCanvas( FViewport& InViewport, FSceneView& Vi
 		}
 	}
 
-	UAnimSequence* AnimSequence = Cast<UAnimSequence>(GetAnimPreviewScene()->GetPreviewAnimationAsset());
-	if (AnimSequence == NULL)
-		return;
+	//UAnimSequence* AnimSequence = Cast<UAnimSequence>(GetAnimPreviewScene()->GetPreviewAnimationAsset());
+	//if (AnimSequence == NULL)
+	//	return;
 
-	if (BoneSpeeds.Num() > 0)
-	{
-		FCanvasLineItem LineItem;
-		LineItem.LineThickness = 1.0f;
+	//if (BoneSpeeds.Num() > 0)
+	//{
+	//	FCanvasLineItem LineItem;
+	//	LineItem.LineThickness = 1.0f;
 
-		float SizeX = Viewport->GetSizeXY().X;
-		float SizeY = Viewport->GetSizeXY().Y;
+	//	float SizeX = Viewport->GetSizeXY().X;
+	//	float SizeY = Viewport->GetSizeXY().Y;
 
-		float Scale = AnimSequence->GraphScale;
-		float DeltaX = SizeX / (float)BoneSpeeds.Num();
+	//	float Scale = AnimSequence->GraphScale;
+	//	float DeltaX = SizeX / (float)BoneSpeeds.Num();
 
-		LineItem.SetColor(FLinearColor::Green);
+	//	LineItem.SetColor(FLinearColor::Green);
 
-		// bone height graph
-		for (int32 IdxPos = 1; IdxPos < BonePosList.Num(); ++IdxPos)
-		{
-			FVector2D BeginPos((IdxPos - 1) * DeltaX, SizeY - BonePosList[IdxPos - 1].Z * Scale);
-			FVector2D EndPos(IdxPos * DeltaX, SizeY - BonePosList[IdxPos].Z * Scale);
+	//	// bone height graph
+	//	for (int32 IdxPos = 1; IdxPos < BonePosList.Num(); ++IdxPos)
+	//	{
+	//		FVector2D BeginPos((IdxPos - 1) * DeltaX, SizeY - BonePosList[IdxPos - 1].Z * Scale);
+	//		FVector2D EndPos(IdxPos * DeltaX, SizeY - BonePosList[IdxPos].Z * Scale);
 
-			LineItem.Draw(&Canvas, BeginPos, EndPos);
-		}
+	//		LineItem.Draw(&Canvas, BeginPos, EndPos);
+	//	}
 
-		LineItem.SetColor(FLinearColor::White);
+	//	LineItem.SetColor(FLinearColor::White);
 
-		// bone speed graph
-		for (int32 IdxSpd = 1; IdxSpd < BoneSpeeds.Num(); ++IdxSpd)
-		{
-			FVector2D BeginPos(IdxSpd * DeltaX, SizeY - BoneSpeeds[IdxSpd - 1] * Scale);
-			FVector2D EndPos((IdxSpd + 1) * DeltaX, SizeY - BoneSpeeds[IdxSpd] * Scale);
-			LineItem.Draw(&Canvas, BeginPos, EndPos);
-		}
+	//	// bone speed graph
+	//	for (int32 IdxSpd = 1; IdxSpd < BoneSpeeds.Num(); ++IdxSpd)
+	//	{
+	//		FVector2D BeginPos(IdxSpd * DeltaX, SizeY - BoneSpeeds[IdxSpd - 1] * Scale);
+	//		FVector2D EndPos((IdxSpd + 1) * DeltaX, SizeY - BoneSpeeds[IdxSpd] * Scale);
+	//		LineItem.Draw(&Canvas, BeginPos, EndPos);
+	//	}
 
-		float AnimTime = PreviewMeshComponent->PreviewInstance->GetCurrentTime();
-		float Ratio = SizeX * AnimTime / AnimSequence->SequenceLength;
+	//	float AnimTime = PreviewMeshComponent->PreviewInstance->GetCurrentTime();
+	//	float Ratio = SizeX * AnimTime / AnimSequence->SequenceLength;
 
-		//int32 AnimFrame = AnimTime / 0.033f;
+	//	//int32 AnimFrame = AnimTime / 0.033f;
 
-		// time line
-		LineItem.SetColor(FLinearColor::Gray);
-		LineItem.Draw(&Canvas, FVector2D(Ratio, 0), FVector2D(Ratio, SizeY));
+	//	// time line
+	//	LineItem.SetColor(FLinearColor::Gray);
+	//	LineItem.Draw(&Canvas, FVector2D(Ratio, 0), FVector2D(Ratio, SizeY));
 
-		float LimitMaxY = SizeY - AnimSequence->LimitMaxPos * Scale;
-		float LimitMinY = SizeY - AnimSequence->LimitMinPos * Scale;
+	//	float LimitMaxY = SizeY - AnimSequence->LimitMaxPos * Scale;
+	//	float LimitMinY = SizeY - AnimSequence->LimitMinPos * Scale;
 
-		// limit speed line
-		LineItem.SetColor(FLinearColor::Red);
-		LineItem.Draw(&Canvas, FVector2D(0, LimitMaxY), FVector2D(SizeX, LimitMaxY));
+	//	// limit speed line
+	//	LineItem.SetColor(FLinearColor::Red);
+	//	LineItem.Draw(&Canvas, FVector2D(0, LimitMaxY), FVector2D(SizeX, LimitMaxY));
 
-		LineItem.SetColor(FLinearColor::Blue);
-		LineItem.Draw(&Canvas, FVector2D(0, LimitMinY), FVector2D(SizeX, LimitMinY));
-	}
-	else
-	{
-		CalcBoneSpeeds(BoneSpeeds, AnimSequence->BoneName);
-	}
+	//	LineItem.SetColor(FLinearColor::Blue);
+	//	LineItem.Draw(&Canvas, FVector2D(0, LimitMinY), FVector2D(SizeX, LimitMinY));
+	//}
+	//else
+	//{
+	//	CalcBoneSpeeds(BoneSpeeds, AnimSequence->BoneName);
+	//}
 }
 
 void FAnimationViewportClient::DrawUVsForMesh(FViewport* InViewport, FCanvas* InCanvas, int32 InTextYPos)
